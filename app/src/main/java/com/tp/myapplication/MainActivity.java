@@ -20,6 +20,12 @@ import android.widget.LinearLayout;
 import java.util.List;
 
 
+/**
+ * Created by yoann on 09/10/2018.
+ * classe principal de l'application, permettant d'initialiser la zone de dessin, de récupéré les valeur des capteur et de déplacer les éléments
+ */
+
+
 public class MainActivity extends AppCompatActivity implements View.OnTouchListener, SensorEventListener {
 
     private float x;

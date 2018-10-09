@@ -12,6 +12,7 @@ import android.view.SurfaceView;
 
 /**
  * Created by yoann on 09/10/2018.
+ * classe permettant de faire le dessin d'un cercle qu'on pourra déplacer
  */
 
 public class MySurfaceView extends SurfaceView implements SurfaceHolder.Callback {
