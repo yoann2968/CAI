@@ -19,6 +19,8 @@ public class MySurfaceView extends SurfaceView implements SurfaceHolder.Callback
 
     private SurfaceHolder surfaceHolder = null;
 
+    private int test;
+
     public MySurfaceView(Context context) {
         super(context);
 
