@@ -1,7 +1,6 @@
 package com.tp.myapplication;
 
 
-import android.graphics.Camera;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -33,15 +32,14 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
 
     final String TAG = "sensor";
 
-    private LinearLayout canvasLayout = null;
     MySurfaceView customSurfaceView = null;
 
     SensorManager mSensorManager;
     private Sensor mAccelerometer;
 
-    private Camera camera;
+    /*private Camera camera;
 
-    private Boolean isPreview;
+    private Boolean isPreview;*/
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -50,7 +48,7 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
 
         sensorDetection();
 
-        canvasLayout = (LinearLayout) findViewById(R.id.customViewLayout);
+        LinearLayout canvasLayout = findViewById(R.id.customViewLayout);
 
         // Make app full screen
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
@@ -62,7 +60,9 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
         if (mSensorManager == null) {
             mSensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
         }
-        mAccelerometer = mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+        if (mSensorManager != null) {
+            mAccelerometer = mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+        }
 
         /*isPreview = false;
         camera = Camera.open();*/
@@ -138,7 +138,9 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
         if (x + 100 >= customSurfaceView.getWidth() | y <= 0 | x <= 0 | y + 100 >= customSurfaceView.getHeight()) {
             Vibrator vib;
             vib = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
-            vib.vibrate(100);
+            if (vib != null) {
+                vib.vibrate(100);
+            }
         }
 
 
