@@ -135,15 +135,17 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
             x -= Ax;
             y += Ay;
             customSurfaceView.drawRedBall(x, y);
-        }
 
-        if (x + 100 >= customSurfaceView.getWidth() | y <= 0 | x <= 0 | y + 100 >= customSurfaceView.getHeight()) {
-            Vibrator vib;
-            vib = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
-            if (vib != null) {
-                vib.vibrate(100);
+            if (x + 100 >= customSurfaceView.getWidth() | y <= 0 | x <= 0 | y + 100 >= customSurfaceView.getHeight()) {
+                Vibrator vib;
+                vib = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+                if (vib != null) {
+                    vib.vibrate(100);
+                }
             }
         }
+
+
 
 
         // Do something with this sensor value .

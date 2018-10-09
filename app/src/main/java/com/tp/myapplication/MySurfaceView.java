@@ -2,6 +2,7 @@ package com.tp.myapplication;
 
 
 import android.content.Context;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -59,6 +60,7 @@ public class MySurfaceView extends SurfaceView implements SurfaceHolder.Callback
         Paint paint = new Paint();
         paint.setColor(Color.RED);
         canvas.drawCircle(circleX, circleY, 100, paint);
+        //canvas.drawBitmap(BitmapFactory.decodeResource(getResources(), R.drawable.ic_launcher_background),circleX,circleY,paint);
 
         // Unlock the canvas object and post the new draw.
         surfaceHolder.unlockCanvasAndPost(canvas);
