@@ -1,6 +1,7 @@
 package com.tp.myapplication;
 
 
+import android.annotation.SuppressLint;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -69,6 +70,7 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
     }
 
     /* If user finger touch the surfaceview object. */
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     public boolean onTouch(View view, MotionEvent motionEvent) {
 
