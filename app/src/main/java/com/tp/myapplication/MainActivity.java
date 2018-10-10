@@ -2,6 +2,7 @@ package com.tp.myapplication;
 
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.hardware.Camera;
 import android.hardware.Sensor;
@@ -18,6 +19,7 @@ import android.view.MotionEvent;
 import android.view.SurfaceView;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import java.util.List;
 
@@ -70,6 +72,17 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
         if (mSensorManager != null) {
             mAccelerometer = mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
         }
+
+        //Initialisation du bouton permettant de rechercher un spot ideal et gestion de l'absence de profil afin d'en crée un avant de rechercher un spot
+        final Button recherche = findViewById(R.id.recherche);
+        recherche.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, Affichage.class);
+                startActivity(intent);
+
+            }
+        });
 
     }
 
