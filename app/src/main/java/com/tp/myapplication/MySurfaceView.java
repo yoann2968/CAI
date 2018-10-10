@@ -7,8 +7,11 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.PixelFormat;
+import android.hardware.Camera;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
+
+import java.io.IOException;
 
 
 /**
@@ -20,8 +23,12 @@ public class MySurfaceView extends SurfaceView implements SurfaceHolder.Callback
 
     private SurfaceHolder surfaceHolder = null;
 
-    public MySurfaceView(Context context) {
+    private Camera mCamera;
+
+    public MySurfaceView(Context context, Camera camera) {
         super(context);
+
+        mCamera = camera;
 
         setFocusable(true);
 
@@ -68,11 +75,42 @@ public class MySurfaceView extends SurfaceView implements SurfaceHolder.Callback
 
     @Override
     public void surfaceCreated(SurfaceHolder holder) {
+        // The Surface has been created, now tell the camera where to draw the preview.
+        try {
+            mCamera.setPreviewDisplay(holder);
+            mCamera.startPreview();
+        } catch (IOException e) {
+        }
 
     }
 
     @Override
     public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
+        // If your preview can change or rotate, take care of those events here.
+        // Make sure to stop the preview before resizing or reformatting it.
+
+        if (holder.getSurface() == null){
+            // preview surface does not exist
+            return;
+        }
+
+        // stop preview before making changes
+        try {
+            mCamera.stopPreview();
+        } catch (Exception e){
+            // ignore: tried to stop a non-existent preview
+        }
+
+        // set preview size and make any resize, rotate or
+        // reformatting changes here
+
+        // start preview with new settings
+        try {
+            mCamera.setPreviewDisplay(holder);
+            mCamera.startPreview();
+
+        } catch (Exception e){
+        }
 
     }
 
