@@ -27,7 +27,7 @@ import java.util.List;
  */
 
 
-public class dessinActivity extends AppCompatActivity implements View.OnTouchListener, SensorEventListener {
+public class DessinActivity extends AppCompatActivity implements View.OnTouchListener, SensorEventListener {
 
     private float x;
     private float y;
