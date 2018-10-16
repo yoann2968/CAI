@@ -6,4 +6,6 @@
     <string name="dessin">Dessin</string>
 
     <string name="affichage">Affichage</string>
+
+    <string name="capteur_activity">Capteur disponible</string>
 </resources>
