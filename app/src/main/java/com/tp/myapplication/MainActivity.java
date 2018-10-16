@@ -40,6 +40,9 @@ public class MainActivity extends AppCompatActivity {
             case R.id.Help:
                 Toast toast = Toast.makeText(MainActivity.this , "Vous avez choisit le menu d'aide", Toast.LENGTH_LONG);
                 toast.show();
+
+                Intent i = new Intent (MainActivity.this, HelpActivity.class);
+                startActivity(i);
                 return true;
 
             case R.id.item1:
@@ -49,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
                 return true;
 
             case R.id.item2:
-                //Si l'utilisateur choisaffichage, on ouvre l'activité d'affichage des capteurs
+                //Si l'utilisateur choisit affichage, on ouvre l'activité d'affichage des capteurs
 
                 Toast toast1 = Toast.makeText(MainActivity.this , "Vous avez choisit Affichage dans le menu", Toast.LENGTH_LONG);
                 toast1.show();
@@ -65,5 +68,3 @@ public class MainActivity extends AppCompatActivity {
     }
 
 }
-
-

@@ -1,4 +1,7 @@
 <resources>
+
+    <!-- général -->
+
     <string name="app_name">My Application</string>
 
     <string name="home">Home</string>
@@ -6,4 +9,13 @@
     <string name="dessin">Dessin</string>
 
     <string name="affichage">Affichage</string>
+
+    <!-- activity_main.xml  -->
+
+    <string name="capteur_activity">Capteur disponible</string>
+
+    <!-- activity_help.xml  -->
+
+    <string name="help_title">Information concernant l\'application</string>
+
 </resources>

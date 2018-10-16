@@ -6,16 +6,12 @@
     android:layout_height="match_parent"
     tools:context="com.tp.myapplication.MainActivity">
 
-    <LinearLayout
-        android:id="@+id/customViewLayout"
+    <Button
+        android:id="@+id/affichage"
         android:layout_width="match_parent"
-        android:layout_height="420dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:orientation="vertical"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"></LinearLayout>
+        android:layout_height="79dp"
+        android:layout_marginBottom="8dp"
+        android:text="@string/capteur_activity"
+        app:layout_constraintBottom_toBottomOf="parent" />
 
 </android.support.constraint.ConstraintLayout>
