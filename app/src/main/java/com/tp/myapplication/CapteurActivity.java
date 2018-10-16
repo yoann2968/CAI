@@ -1,16 +1,20 @@
 package com.tp.myapplication;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.telephony.SmsManager;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -76,6 +80,29 @@ public class CapteurActivity extends AppCompatActivity implements SensorEventLis
             }
         });
 
+    }
+
+    //Création du menu identique pour toutes les activités sauf l'accueil
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_all, menu);
+        return true;
+    }
+
+    //Gestion du choix de l'item dans le menu
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        //Parcours les différents items pouvant être sélectionner
+        switch (item.getItemId()) {
+            case R.id.Home:
+                //Si l'utilisateur click sur le logo de maisson on revient a l'accueil
+                Intent i = new Intent(CapteurActivity.this, MainActivity.class);
+                startActivity(i);
+                return true;
+
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
     void sensorDetection() {

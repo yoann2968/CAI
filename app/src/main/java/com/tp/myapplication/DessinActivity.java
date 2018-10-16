@@ -2,6 +2,7 @@ package com.tp.myapplication;
 
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -12,6 +13,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.SurfaceView;
 import android.view.View;
@@ -64,6 +67,29 @@ public class DessinActivity extends AppCompatActivity implements View.OnTouchLis
             mAccelerometer = mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
         }
 
+    }
+
+    //Création du menu identique pour toutes les activités sauf l'accueil
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_all, menu);
+        return true;
+    }
+
+    //Gestion du choix de l'item dans le menu
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        //Parcours les différents items pouvant être sélectionner
+        switch (item.getItemId()) {
+            case R.id.Home:
+                //Si l'utilisateur click sur le logo de maisson on revient a l'accueil
+                Intent i = new Intent(DessinActivity.this, MainActivity.class);
+                startActivity(i);
+                return true;
+
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
     /* If user finger touch the surfaceview object. */
