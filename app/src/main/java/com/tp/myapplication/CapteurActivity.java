@@ -36,6 +36,7 @@ public class CapteurActivity extends AppCompatActivity implements SensorEventLis
 
     //Variable correspondant au valeur du capteur d'accélérometre
     private String acce;
+    private String light;
 
     //Variable pour définir les spinners
     Spinner spinner_sensor;
@@ -117,8 +118,10 @@ public class CapteurActivity extends AppCompatActivity implements SensorEventLis
         if (sensorEvent.sensor.getType() == Sensor.TYPE_LIGHT) {
             // La valeur de la lumière
             float lv = sensorEvent.values[0];
+
+            light = " TimeAcc = " + sensorEvent.timestamp + "\n Light value = " + lv+"\n";
             //On affiche la valeur
-            lightSensorText.setText(" TimeAcc = " + sensorEvent.timestamp + "\n Light value = " + lv);
+            lightSensorText.setText(light);
         }
 
         if (sensorEvent.sensor.getType() == Sensor.TYPE_ACCELEROMETER) {
@@ -126,7 +129,7 @@ public class CapteurActivity extends AppCompatActivity implements SensorEventLis
             float Ay = sensorEvent.values[1];
             float Az = sensorEvent.values[2];
 
-            acce = " TimeAcc = " + sensorEvent.timestamp + "\n Ax = " + Ax + " " + "\n Ay = " + Ay + " " + "\n Az = " + Az;
+            acce = " TimeAcc = " + sensorEvent.timestamp + "\n Ax = " + Ax + " " + "\n Ay = " + Ay + " " + "\n Az = " + Az + "\n";
 
             // Do something with this sensor value .
             accSensorText.setText(acce);
@@ -151,10 +154,12 @@ public class CapteurActivity extends AppCompatActivity implements SensorEventLis
             }
         }
 
+        String msg = light + acce;
+
         String num = numero.getText().toString();
 
         if (num.length()== 10 ){
-            SmsManager.getDefault().sendTextMessage(num, null, acce, null, null);
+            SmsManager.getDefault().sendTextMessage(num, null, msg, null, null);
             numero.setText("");
         }
         else{
