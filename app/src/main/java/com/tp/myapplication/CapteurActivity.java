@@ -12,7 +12,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.telephony.SmsManager;
 import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import java.util.List;
@@ -28,12 +30,15 @@ public class CapteurActivity extends AppCompatActivity implements SensorEventLis
     private TextView accSensorText; //Accelerometre
     private TextView lightSensorText; //Capteur de lumiere
 
+    //Variable pour définir les spinners
+    Spinner spinner_lvl;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_capteur);
-        accSensorText= (TextView) findViewById(R.id.capteur1); //Accelerometre
-        lightSensorText= (TextView) findViewById(R.id.capteur2); //Capteur de lumiere
+        accSensorText= findViewById(R.id.capteur1); //Accelerometre
+        lightSensorText= findViewById(R.id.capteur2); //Capteur de lumiere
 
         sensorDetection();
 
@@ -44,6 +49,12 @@ public class CapteurActivity extends AppCompatActivity implements SensorEventLis
             mAccelerometer = mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
             mLightSensor = mSensorManager.getDefaultSensor(Sensor.TYPE_LIGHT);
         }
+
+        //Gestion des differents spinner servant à choisir son niveau/fond&spot favoris
+        spinner_lvl = findViewById(R.id.spinner_lvl);
+        ArrayAdapter<CharSequence> adapter_lvl = ArrayAdapter.createFromResource(this, R.array.lvl, android.R.layout.simple_spinner_item);
+        adapter_lvl.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner_lvl.setAdapter(adapter_lvl);
 
         //Initialisation du bouton permettant de voir les capteurs disponible
         final Button envoie_sms = findViewById(R.id.envoie_sms);
