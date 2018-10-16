@@ -1,10 +1,6 @@
 package com.tp.myapplication;
 
 
-import android.annotation.SuppressLint;
-import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.hardware.Camera;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -19,7 +15,6 @@ import android.view.MotionEvent;
 import android.view.SurfaceView;
 import android.view.View;
 import android.view.WindowManager;
-import android.widget.Button;
 import android.widget.LinearLayout;
 import java.util.List;
 
@@ -42,8 +37,6 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
     SensorManager mSensorManager;
     private Sensor mAccelerometer;
 
-    private Camera camera;
-
    // private Boolean isPreview;
 
     @Override
@@ -58,11 +51,7 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
         // Make app full screen
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
-        if (checkCameraHardware(this)){
-            camera = getCameraInstance();
-        }
-
-        customSurfaceView = new MySurfaceView(this,camera);
+        customSurfaceView = new MySurfaceView(this);
         customSurfaceView.setOnTouchListener(this);
         canvasLayout.addView(customSurfaceView);
 
@@ -73,21 +62,9 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
             mAccelerometer = mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
         }
 
-        //Initialisation du bouton permettant de rechercher un spot ideal et gestion de l'absence de profil afin d'en crée un avant de rechercher un spot
-        final Button recherche = findViewById(R.id.recherche);
-        recherche.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, Affichage.class);
-                startActivity(intent);
-
-            }
-        });
-
     }
 
     /* If user finger touch the surfaceview object. */
-    @SuppressLint("ClickableViewAccessibility")
     @Override
     public boolean onTouch(View view, MotionEvent motionEvent) {
 
@@ -162,9 +139,6 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
             }
         }
 
-
-
-
         // Do something with this sensor value .
         Log.v(TAG, " TimeAcc = " + sensorEvent.timestamp + " Ax = " + Ax + " " + " Ay = " + Ay + " " + " Az = " + Az);
     }
@@ -172,29 +146,6 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
     @Override
     public void onAccuracyChanged(Sensor sensor, int i) {
 
-    }
-
-    /** Check if this device has a camera */
-    private boolean checkCameraHardware(Context context) {
-        if (context.getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA)){
-            // this device has a camera
-            return true;
-        } else {
-            // no camera on this device
-            return false;
-        }
-    }
-
-    /** A safe way to get an instance of the Camera object. */
-    public static Camera getCameraInstance(){
-        Camera c = null;
-        try {
-            c = Camera.open(); // attempt to get a Camera instance
-        }
-        catch (Exception e){
-            // Camera is not available (in use or does not exist)
-        }
-        return c; // returns null if camera is unavailable
     }
 
 }
