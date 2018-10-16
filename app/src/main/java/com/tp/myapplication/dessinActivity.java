@@ -17,16 +17,17 @@ import android.view.SurfaceView;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.LinearLayout;
+
 import java.util.List;
 
 
 /**
  * Created by yoann on 09/10/2018.
- * classe principal de l'application, permettant d'initialiser la zone de dessin, de récupéré les valeur des capteur et de déplacer les éléments
+ * classe permettant d'initialiser la zone de dessin, de récupéré les valeurs du capteur d'accélérometre et de déplacer les éléments
  */
 
 
-public class MainActivity extends AppCompatActivity implements View.OnTouchListener, SensorEventListener {
+public class dessinActivity extends AppCompatActivity implements View.OnTouchListener, SensorEventListener {
 
     private float x;
     private float y;
@@ -38,7 +39,7 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
     SensorManager mSensorManager;
     private Sensor mAccelerometer;
 
-   // private Boolean isPreview;
+    // private Boolean isPreview;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
