@@ -13,19 +13,23 @@ import android.widget.TextView;
 
 import java.util.List;
 
-public class Affichage extends AppCompatActivity implements SensorEventListener {
+public class CapteurActivity extends AppCompatActivity implements SensorEventListener {
 
     final String TAG = "sensor";
 
     SensorManager mSensorManager;
-    private Sensor mAccelerometer;
-    private TextView capteur1Valeur;
+    private Sensor mAccelerometer; //Accelerometre
+    private Sensor mLightSensor; //Capteur de lumiere
+
+    private TextView accSensorText; //Accelerometre
+    private TextView lightSensorText; //Capteur de lumiere
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.affichage);
-        capteur1Valeur= (TextView) findViewById(R.id.capteur1);
+        setContentView(R.layout.activity_capteur);
+        accSensorText= (TextView) findViewById(R.id.capteur1); //Accelerometre
+        lightSensorText= (TextView) findViewById(R.id.capteur2); //Capteur de lumiere
 
         sensorDetection();
 
@@ -34,6 +38,7 @@ public class Affichage extends AppCompatActivity implements SensorEventListener 
         }
         if (mSensorManager != null) {
             mAccelerometer = mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+            mLightSensor = mSensorManager.getDefaultSensor(Sensor.TYPE_LIGHT);
         }
 
     }
@@ -60,6 +65,7 @@ public class Affichage extends AppCompatActivity implements SensorEventListener 
         super.onResume();
         if (mSensorManager != null) {
             mSensorManager.registerListener(this, mAccelerometer, SensorManager.SENSOR_DELAY_NORMAL);
+            mSensorManager.registerListener(this, mLightSensor, SensorManager.SENSOR_DELAY_NORMAL);
         }
     }
 
@@ -74,14 +80,22 @@ public class Affichage extends AppCompatActivity implements SensorEventListener 
     @Override
     public void onSensorChanged(SensorEvent sensorEvent) {
         // Many sensors return 3 values , one for each axis .
-        float Ax = sensorEvent.values[0];
-        float Ay = sensorEvent.values[1];
-        float Az = sensorEvent.values[2];
+        if (sensorEvent.sensor.getType() == Sensor.TYPE_LIGHT) {
+            // La valeur de la lumière
+            float lv = sensorEvent.values[0];
+            lightSensorText.setText(" TimeAcc = " + sensorEvent.timestamp + "\n Light value = " + lv);
+        }
 
+        if (sensorEvent.sensor.getType() == Sensor.TYPE_ACCELEROMETER) {
+            float Ax = sensorEvent.values[0];
+            float Ay = sensorEvent.values[1];
+            float Az = sensorEvent.values[2];
 
-        // Do something with this sensor value .
-        capteur1Valeur.setText(" TimeAcc = " + sensorEvent.timestamp + "\n Ax = " + Ax + " " + "\n Ay = " + Ay + " " + "\n Az = " + Az);
-        Log.v(TAG, " TimeAcc = " + sensorEvent.timestamp + " Ax = " + Ax + " " + " Ay = " + Ay + " " + " Az = " + Az);
+            // Do something with this sensor value .
+            accSensorText.setText(" TimeAcc = " + sensorEvent.timestamp + "\n Ax = " + Ax + " " + "\n Ay = " + Ay + " " + "\n Az = " + Az);
+            Log.v(TAG, " TimeAcc = " + sensorEvent.timestamp + " Ax = " + Ax + " " + " Ay = " + Ay + " " + " Az = " + Az);
+        }
+
     }
 
     @Override

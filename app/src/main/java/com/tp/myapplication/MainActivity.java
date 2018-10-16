@@ -52,12 +52,12 @@ public class MainActivity extends AppCompatActivity {
                 return true;
 
             case R.id.item2:
-                //Si l'utilisateur choisit affichage, on ouvre l'activité d'affichage des capteurs
+                //Si l'utilisateur choisit activity_capteur, on ouvre l'activité d'activity_capteur des capteurs
 
-                Toast toast1 = Toast.makeText(MainActivity.this , "Vous avez choisit Affichage dans le menu", Toast.LENGTH_LONG);
+                Toast toast1 = Toast.makeText(MainActivity.this , "Vous avez choisit CapteurActivity dans le menu", Toast.LENGTH_LONG);
                 toast1.show();
 
-                Intent intent2 = new Intent(MainActivity.this, Affichage.class);
+                Intent intent2 = new Intent(MainActivity.this, CapteurActivity.class);
                 startActivity(intent2);
 
                 return true;

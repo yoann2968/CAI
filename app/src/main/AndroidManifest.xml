@@ -22,7 +22,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Affichage"
+        <activity android:name=".CapteurActivity"
             android:screenOrientation="portrait"/>
         <activity android:name=".DessinActivity"
             android:screenOrientation="portrait"/>

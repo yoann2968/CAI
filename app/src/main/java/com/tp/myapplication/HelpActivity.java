@@ -9,13 +9,13 @@ import android.widget.TextView;
 
 /**
  * Created by yoann on 16/10/2018.
- * classe permettant l'affichage de l'aide de l'application
+ * classe permettant l'activity_capteur de l'aide de l'application
  */
 
 public class HelpActivity extends AppCompatActivity {
 
     //Déclaration des differentes variables pour l'application
-    //Variable permettant de gérer l'affichage de l'aide
+    //Variable permettant de gérer l'activity_capteur de l'aide
     public TextView helpDisplay;
 
     @Override
@@ -23,13 +23,13 @@ public class HelpActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_help);
 
-        //Initialisation des variables pour l'affichage de l'aide sur l'activité
+        //Initialisation des variables pour l'activity_capteur de l'aide sur l'activité
         helpDisplay = findViewById(R.id.help_display);
 
         affichage();
     }
 
-    //Méthode permettant de faire l'affichage de l'aide
+    //Méthode permettant de faire l'activity_capteur de l'aide
     private void affichage(){
 
         helpDisplay.setText("Voici un prémice du vrai fichier d'aide qui viendra plus tard");
