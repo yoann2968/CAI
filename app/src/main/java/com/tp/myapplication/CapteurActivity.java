@@ -7,7 +7,6 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -25,6 +24,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.List;
+
 import android.widget.AdapterView.OnItemSelectedListener;
 
 
@@ -36,10 +36,11 @@ public class CapteurActivity extends AppCompatActivity implements SensorEventLis
     private Sensor mAccelerometer; //Accelerometre
     private Sensor mLightSensor; //Capteur de lumiere
 
-    private TextView accSensorText; //Accelerometre
-    private TextView lightSensorText; //Capteur de lumiere
+    private TextView sensorTxt;
 
     private EditText numero;
+
+    private int s;
 
     //Variable correspondant au valeur du capteur d'accélérometre
     private String acce;
@@ -52,8 +53,7 @@ public class CapteurActivity extends AppCompatActivity implements SensorEventLis
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_capteur);
-        accSensorText= findViewById(R.id.capteur1); //Accelerometre
-        lightSensorText= findViewById(R.id.capteur2); //Capteur de lumiere
+        sensorTxt = findViewById(R.id.capteur);
 
         numero = findViewById(R.id.numero);
 
@@ -150,16 +150,16 @@ public class CapteurActivity extends AppCompatActivity implements SensorEventLis
     @Override
     public void onSensorChanged(SensorEvent sensorEvent) {
         // Many sensors return 3 values , one for each axis .
-        if (sensorEvent.sensor.getType() == Sensor.TYPE_LIGHT) {
+        if (sensorEvent.sensor.getType() == Sensor.TYPE_LIGHT && s==1) {
             // La valeur de la lumière
             float lv = sensorEvent.values[0];
 
-            light = " TimeAcc = " + sensorEvent.timestamp + "\n Light value = " + lv+"\n";
+            light = " TimeAcc = " + sensorEvent.timestamp + "\n Light value = " + lv + "\n";
             //On affiche la valeur
-            lightSensorText.setText(light);
+            sensorTxt.setText(light);
         }
 
-        if (sensorEvent.sensor.getType() == Sensor.TYPE_ACCELEROMETER) {
+        if (sensorEvent.sensor.getType() == Sensor.TYPE_ACCELEROMETER && s == 0) {
             float Ax = sensorEvent.values[0];
             float Ay = sensorEvent.values[1];
             float Az = sensorEvent.values[2];
@@ -167,7 +167,7 @@ public class CapteurActivity extends AppCompatActivity implements SensorEventLis
             acce = " TimeAcc = " + sensorEvent.timestamp + "\n Ax = " + Ax + " " + "\n Ay = " + Ay + " " + "\n Az = " + Az + "\n";
 
             // Do something with this sensor value .
-            accSensorText.setText(acce);
+            sensorTxt.setText(acce);
             Log.v(TAG, " TimeAcc = " + sensorEvent.timestamp + " Ax = " + Ax + " " + " Ay = " + Ay + " " + " Az = " + Az);
         }
 
@@ -179,48 +179,36 @@ public class CapteurActivity extends AppCompatActivity implements SensorEventLis
     }
 
     private void sendSMS() {
-        final int PERMISSION_REQUEST_CODE = 1;
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
-            if (checkSelfPermission(android.Manifest.permission.SEND_SMS) ==
-                    PackageManager.PERMISSION_DENIED) {
-                Log.d(" permission ", " permission denied to SEND_SMS - requesting it ");
-                String[] permissions = {android.Manifest.permission.SEND_SMS};
-                requestPermissions(permissions, PERMISSION_REQUEST_CODE);
-            }
-        }
 
         String msg = light + acce;
 
         String num = numero.getText().toString();
 
-        if (num.length()== 10 ){
-            SmsManager.getDefault().sendTextMessage(num, null, msg, null, null);
-            numero.setText("");
-        }
-        else{
-            //On affiche un petit message d'erreur dans un Toast
-            Toast toast = Toast.makeText(CapteurActivity.this , "Veuilliez écrire un numero a 10 chiffres", Toast.LENGTH_LONG);
-            toast.show();
+        final int PERMISSION_REQUEST_CODE = 1;
+
+        if (checkSelfPermission(android.Manifest.permission.SEND_SMS) ==
+                PackageManager.PERMISSION_DENIED) {
+            Log.d(" permission ", " permission denied to SEND_SMS - requesting it ");
+            String[] permissions = {android.Manifest.permission.SEND_SMS};
+            requestPermissions(permissions, PERMISSION_REQUEST_CODE);
+        } else {
+            if (num.length() == 10) {
+                SmsManager.getDefault().sendTextMessage(num, null, msg, null, null);
+                numero.setText("");
+            } else {
+                //On affiche un petit message d'erreur dans un Toast
+                Toast toast = Toast.makeText(CapteurActivity.this, "Veuilliez écrire un numero a 10 chiffres", Toast.LENGTH_LONG);
+                toast.show();
+
+            }
         }
     }
 
     @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
 
-        //Selection par defaut du spinner (Premier element)
-        if (i==0) {
-            accSensorText.setVisibility(View.VISIBLE);
-            lightSensorText.setVisibility(View.INVISIBLE);
-        }
+        s=i;
 
-        //Deuxieme element du spinner
-        else if (i==1) {
-            lightSensorText.setVisibility(View.VISIBLE);
-            accSensorText.setVisibility(View.INVISIBLE);
-        }
-
-        // Showing selected spinner item
-        //Toast.makeText(parent.getContext(), "Selected: " + item, Toast.LENGTH_LONG).show();
     }
 
     @Override

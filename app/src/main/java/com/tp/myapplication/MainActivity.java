@@ -2,9 +2,11 @@ package com.tp.myapplication;
 
 
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -36,6 +38,16 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        final int PERMISSION_REQUEST_CODE = 1;
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
+            if (checkSelfPermission(android.Manifest.permission.SEND_SMS) ==
+                    PackageManager.PERMISSION_DENIED) {
+                Log.d(" permission ", " permission denied to SEND_SMS - requesting it ");
+                String[] permissions = {android.Manifest.permission.SEND_SMS};
+                requestPermissions(permissions, PERMISSION_REQUEST_CODE);
+            }
+        }
+
     }
 
     //Création du menu pour l'acitivité principal de l'application
@@ -51,10 +63,10 @@ public class MainActivity extends AppCompatActivity {
         //Parcours les différents items pouvant être sélectionner
         switch (item.getItemId()) {
             case R.id.Help:
-                Toast toast = Toast.makeText(MainActivity.this , "Vous avez choisit le menu d'aide", Toast.LENGTH_LONG);
+                Toast toast = Toast.makeText(MainActivity.this, "Vous avez choisit le menu d'aide", Toast.LENGTH_LONG);
                 toast.show();
 
-                Intent i = new Intent (MainActivity.this, HelpActivity.class);
+                Intent i = new Intent(MainActivity.this, HelpActivity.class);
                 startActivity(i);
                 return true;
 
@@ -67,7 +79,7 @@ public class MainActivity extends AppCompatActivity {
             case R.id.item2:
                 //Si l'utilisateur choisit activity_capteur, on ouvre l'activité d'activity_capteur des capteurs
 
-                Toast toast1 = Toast.makeText(MainActivity.this , "Vous avez choisit CapteurActivity dans le menu", Toast.LENGTH_LONG);
+                Toast toast1 = Toast.makeText(MainActivity.this, "Vous avez choisit CapteurActivity dans le menu", Toast.LENGTH_LONG);
                 toast1.show();
 
                 Intent intent2 = new Intent(MainActivity.this, CapteurActivity.class);
