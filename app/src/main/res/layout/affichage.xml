@@ -7,12 +7,25 @@
 
     <TextView
         android:id="@+id/capteur1"
-        android:layout_width="100dp"
-        android:layout_height="60dp"
-        android:layout_marginStart="132dp"
-        android:layout_marginTop="212dp"
+        android:layout_width="212dp"
+        android:layout_height="102dp"
+        android:layout_marginStart="28dp"
+        android:layout_marginTop="52dp"
+        android:background="@drawable/back"
         android:text="TextView"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="0dp"
+        android:layout_height="19dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        android:text="Accelerometre"
+        app:layout_constraintBottom_toTopOf="@+id/capteur1"
+        app:layout_constraintEnd_toEndOf="@+id/capteur1"
+        app:layout_constraintStart_toStartOf="@+id/capteur1"
         app:layout_constraintTop_toTopOf="parent" />
 
 </android.support.constraint.ConstraintLayout>
