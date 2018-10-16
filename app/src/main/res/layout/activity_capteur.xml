@@ -9,56 +9,37 @@
         android:id="@+id/capteur1"
         android:layout_width="212dp"
         android:layout_height="102dp"
-        android:layout_marginStart="28dp"
-        android:layout_marginTop="52dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginEnd="8dp"
         android:background="@drawable/back"
         android:text="TextView"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/textAccelerometer"
-        android:layout_width="0dp"
-        android:layout_height="19dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="8dp"
-        android:text="Accelerometre"
-        app:layout_constraintBottom_toTopOf="@+id/capteur1"
-        app:layout_constraintEnd_toEndOf="@+id/capteur1"
-        app:layout_constraintStart_toStartOf="@+id/capteur1"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/spinner_sensor" />
 
     <TextView
         android:id="@+id/capteur2"
         android:layout_width="212dp"
         android:layout_height="102dp"
-        android:layout_marginStart="36dp"
-        android:layout_marginTop="204dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginEnd="8dp"
         android:background="@drawable/back"
         android:text="TextView"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/textLightSensor"
-        android:layout_width="0dp"
-        android:layout_height="19dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="168dp"
-        android:text="Capteur de lumiere"
-        app:layout_constraintStart_toStartOf="@+id/capteur2"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/spinner_sensor" />
 
     <Spinner
         android:id="@+id/spinner_sensor"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:layout_marginBottom="8dp"
+        android:layout_marginTop="8dp"
         android:textColor="@color/black_color"
         android:textSize="@dimen/big_text_size"
-        app:layout_constraintBottom_toTopOf="@+id/linearLayout"
-        tools:layout_editor_absoluteX="10dp" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <LinearLayout
         android:id="@+id/linearLayout"

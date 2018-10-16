@@ -16,6 +16,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -24,8 +25,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.List;
+import android.widget.AdapterView.OnItemSelectedListener;
 
-public class CapteurActivity extends AppCompatActivity implements SensorEventListener {
+
+public class CapteurActivity extends AppCompatActivity implements SensorEventListener, OnItemSelectedListener {
 
     final String TAG = "sensor";
 
@@ -55,12 +58,17 @@ public class CapteurActivity extends AppCompatActivity implements SensorEventLis
         numero = findViewById(R.id.numero);
 
         //Gestion des differents spinner servant à choisir le capteur
+        //Spinner element
         spinner_sensor = findViewById(R.id.spinner_sensor);
         ArrayAdapter<CharSequence> adapter_sensor = ArrayAdapter.createFromResource(this, R.array.sensor, android.R.layout.simple_spinner_item);
         adapter_sensor.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner_sensor.setAdapter(adapter_sensor);
 
-        sensorDetection(); //Detection des capteurs
+        // Spinner click listener
+        spinner_sensor.setOnItemSelectedListener(this);
+
+        //Detection des capteurs
+        sensorDetection();
 
         if (mSensorManager == null) {
             mSensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
@@ -194,6 +202,30 @@ public class CapteurActivity extends AppCompatActivity implements SensorEventLis
             Toast toast = Toast.makeText(CapteurActivity.this , "Veuilliez écrire un numero a 10 chiffres", Toast.LENGTH_LONG);
             toast.show();
         }
+    }
+
+    @Override
+    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+        // On selecting a spinner item
+        String item = spinner_sensor.getItemAtPosition(i).toString();
+
+        if (i==0) {
+            accSensorText.setVisibility(View.VISIBLE);
+            lightSensorText.setVisibility(View.INVISIBLE);
+        }
+
+        else if (i==1) {
+            lightSensorText.setVisibility(View.VISIBLE);
+            accSensorText.setVisibility(View.INVISIBLE);
+        }
+
+        // Showing selected spinner item
+        //Toast.makeText(parent.getContext(), "Selected: " + item, Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> adapterView) {
+        // TODO Auto-generated method stub
     }
 
 }
