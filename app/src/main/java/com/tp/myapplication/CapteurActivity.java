@@ -206,14 +206,14 @@ public class CapteurActivity extends AppCompatActivity implements SensorEventLis
 
     @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-        // On selecting a spinner item
-        String item = spinner_sensor.getItemAtPosition(i).toString();
 
+        //Selection par defaut du spinner (Premier element)
         if (i==0) {
             accSensorText.setVisibility(View.VISIBLE);
             lightSensorText.setVisibility(View.INVISIBLE);
         }
 
+        //Deuxieme element du spinner
         else if (i==1) {
             lightSensorText.setVisibility(View.VISIBLE);
             accSensorText.setVisibility(View.INVISIBLE);
