@@ -24,11 +24,9 @@
 
     <string name="envoie_sms">Envoie des informations par sms</string>
 
-    <string-array name="lvl">
-        <item>Débutant</item>
-        <item>Intermédiaire</item>
-        <item>Expérimenté</item>
-        <item>Pro WSL/APB</item>
+    <string-array name="sensor">
+        <item>Accelerometre</item>
+        <item>Lumiere</item>
     </string-array>
 
 </resources>

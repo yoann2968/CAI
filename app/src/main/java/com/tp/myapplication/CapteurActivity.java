@@ -31,7 +31,7 @@ public class CapteurActivity extends AppCompatActivity implements SensorEventLis
     private TextView lightSensorText; //Capteur de lumiere
 
     //Variable pour définir les spinners
-    Spinner spinner_lvl;
+    Spinner spinner_sensor;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -40,7 +40,13 @@ public class CapteurActivity extends AppCompatActivity implements SensorEventLis
         accSensorText= findViewById(R.id.capteur1); //Accelerometre
         lightSensorText= findViewById(R.id.capteur2); //Capteur de lumiere
 
-        sensorDetection();
+        //Gestion des differents spinner servant à choisir le capteur
+        spinner_sensor = findViewById(R.id.spinner_sensor);
+        ArrayAdapter<CharSequence> adapter_sensor = ArrayAdapter.createFromResource(this, R.array.sensor, android.R.layout.simple_spinner_item);
+        adapter_sensor.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner_sensor.setAdapter(adapter_sensor);
+
+        sensorDetection(); //Detection des capteurs
 
         if (mSensorManager == null) {
             mSensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
@@ -49,12 +55,6 @@ public class CapteurActivity extends AppCompatActivity implements SensorEventLis
             mAccelerometer = mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
             mLightSensor = mSensorManager.getDefaultSensor(Sensor.TYPE_LIGHT);
         }
-
-        //Gestion des differents spinner servant à choisir son niveau/fond&spot favoris
-        spinner_lvl = findViewById(R.id.spinner_lvl);
-        ArrayAdapter<CharSequence> adapter_lvl = ArrayAdapter.createFromResource(this, R.array.lvl, android.R.layout.simple_spinner_item);
-        adapter_lvl.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner_lvl.setAdapter(adapter_lvl);
 
         //Initialisation du bouton permettant de voir les capteurs disponible
         final Button envoie_sms = findViewById(R.id.envoie_sms);
@@ -108,6 +108,7 @@ public class CapteurActivity extends AppCompatActivity implements SensorEventLis
         if (sensorEvent.sensor.getType() == Sensor.TYPE_LIGHT) {
             // La valeur de la lumière
             float lv = sensorEvent.values[0];
+            //On affiche la valeur
             lightSensorText.setText(" TimeAcc = " + sensorEvent.timestamp + "\n Light value = " + lv);
         }
 
@@ -116,7 +117,6 @@ public class CapteurActivity extends AppCompatActivity implements SensorEventLis
             float Ay = sensorEvent.values[1];
             float Az = sensorEvent.values[2];
 
-            // Do something with this sensor value .
             accSensorText.setText(" TimeAcc = " + sensorEvent.timestamp + "\n Ax = " + Ax + " " + "\n Ay = " + Ay + " " + "\n Az = " + Az);
             Log.v(TAG, " TimeAcc = " + sensorEvent.timestamp + " Ax = " + Ax + " " + " Ay = " + Ay + " " + " Az = " + Az);
         }
