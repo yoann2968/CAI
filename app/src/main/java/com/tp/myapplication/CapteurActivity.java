@@ -14,8 +14,10 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.List;
 
@@ -30,6 +32,11 @@ public class CapteurActivity extends AppCompatActivity implements SensorEventLis
     private TextView accSensorText; //Accelerometre
     private TextView lightSensorText; //Capteur de lumiere
 
+    private EditText numero;
+
+    //Variable correspondant au valeur du capteur d'accélérometre
+    private String acce;
+
     //Variable pour définir les spinners
     Spinner spinner_sensor;
 
@@ -39,6 +46,8 @@ public class CapteurActivity extends AppCompatActivity implements SensorEventLis
         setContentView(R.layout.activity_capteur);
         accSensorText= findViewById(R.id.capteur1); //Accelerometre
         lightSensorText= findViewById(R.id.capteur2); //Capteur de lumiere
+
+        numero = findViewById(R.id.numero);
 
         //Gestion des differents spinner servant à choisir le capteur
         spinner_sensor = findViewById(R.id.spinner_sensor);
@@ -117,7 +126,10 @@ public class CapteurActivity extends AppCompatActivity implements SensorEventLis
             float Ay = sensorEvent.values[1];
             float Az = sensorEvent.values[2];
 
-            accSensorText.setText(" TimeAcc = " + sensorEvent.timestamp + "\n Ax = " + Ax + " " + "\n Ay = " + Ay + " " + "\n Az = " + Az);
+            acce = " TimeAcc = " + sensorEvent.timestamp + "\n Ax = " + Ax + " " + "\n Ay = " + Ay + " " + "\n Az = " + Az;
+
+            // Do something with this sensor value .
+            accSensorText.setText(acce);
             Log.v(TAG, " TimeAcc = " + sensorEvent.timestamp + " Ax = " + Ax + " " + " Ay = " + Ay + " " + " Az = " + Az);
         }
 
@@ -138,15 +150,18 @@ public class CapteurActivity extends AppCompatActivity implements SensorEventLis
                 requestPermissions(permissions, PERMISSION_REQUEST_CODE);
             }
         }
-        String msg = " Hello ";
 
-        String num ="0658795964";
-        SmsManager.getDefault().sendTextMessage(num, null, msg, null, null);
-        /*Intent smsIntent = new Intent(Intent.ACTION_SENDTO);
-        smsIntent.addCategory(Intent.CATEGORY_DEFAULT);
-        smsIntent.setDataAndType(Uri.parse(" sms : ")," vnd . android - dir / mms - sms ");
-        smsIntent.putExtra(" sms_body ", msg);
-        startActivity(smsIntent);*/
+        String num = numero.getText().toString();
+
+        if (num.length()== 10 ){
+            SmsManager.getDefault().sendTextMessage(num, null, acce, null, null);
+            numero.setText("");
+        }
+        else{
+            //On affiche un petit message d'erreur dans un Toast
+            Toast toast = Toast.makeText(CapteurActivity.this , "Veuilliez écrire un numero a 10 chiffres", Toast.LENGTH_LONG);
+            toast.show();
+        }
     }
 
 }
