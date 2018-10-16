@@ -35,6 +35,9 @@ public class CapteurActivity extends AppCompatActivity implements SensorEventLis
     SensorManager mSensorManager;
     private Sensor mAccelerometer; //Accelerometre
     private Sensor mLightSensor; //Capteur de lumiere
+    private Sensor mProximiteSensor; //Capteur de lumiere
+    private Sensor mGyroscopeSensor; //Capteur de lumiere
+
 
     private TextView sensorTxt;
 
@@ -45,6 +48,8 @@ public class CapteurActivity extends AppCompatActivity implements SensorEventLis
     //Variable correspondant au valeur du capteur d'accélérometre
     private String acce;
     private String light;
+    private String proxi;
+    private String gyro;
 
     //Variable pour définir les spinners
     Spinner spinner_sensor;
@@ -76,6 +81,8 @@ public class CapteurActivity extends AppCompatActivity implements SensorEventLis
         if (mSensorManager != null) {
             mAccelerometer = mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
             mLightSensor = mSensorManager.getDefaultSensor(Sensor.TYPE_LIGHT);
+            mProximiteSensor = mSensorManager.getDefaultSensor(Sensor.TYPE_PROXIMITY);
+            mGyroscopeSensor = mSensorManager.getDefaultSensor(Sensor.TYPE_GYROSCOPE);
         }
 
         //Initialisation du bouton permettant de voir les capteurs disponible
@@ -136,6 +143,8 @@ public class CapteurActivity extends AppCompatActivity implements SensorEventLis
         if (mSensorManager != null) {
             mSensorManager.registerListener(this, mAccelerometer, SensorManager.SENSOR_DELAY_NORMAL);
             mSensorManager.registerListener(this, mLightSensor, SensorManager.SENSOR_DELAY_NORMAL);
+            mSensorManager.registerListener(this, mProximiteSensor, SensorManager.SENSOR_DELAY_NORMAL);
+            mSensorManager.registerListener(this, mGyroscopeSensor, SensorManager.SENSOR_DELAY_NORMAL);
         }
     }
 
@@ -149,16 +158,9 @@ public class CapteurActivity extends AppCompatActivity implements SensorEventLis
 
     @Override
     public void onSensorChanged(SensorEvent sensorEvent) {
+
         // Many sensors return 3 values , one for each axis .
-        if (sensorEvent.sensor.getType() == Sensor.TYPE_LIGHT && s==1) {
-            // La valeur de la lumière
-            float lv = sensorEvent.values[0];
-
-            light = " TimeAcc = " + sensorEvent.timestamp + "\n Light value = " + lv + "\n";
-            //On affiche la valeur
-            sensorTxt.setText(light);
-        }
-
+        //ACCELEROMETRE
         if (sensorEvent.sensor.getType() == Sensor.TYPE_ACCELEROMETER && s == 0) {
             float Ax = sensorEvent.values[0];
             float Ay = sensorEvent.values[1];
@@ -169,6 +171,38 @@ public class CapteurActivity extends AppCompatActivity implements SensorEventLis
             // Do something with this sensor value .
             sensorTxt.setText(acce);
             Log.v(TAG, " TimeAcc = " + sensorEvent.timestamp + " Ax = " + Ax + " " + " Ay = " + Ay + " " + " Az = " + Az);
+        }
+
+        //LUMIERE
+        if (sensorEvent.sensor.getType() == Sensor.TYPE_LIGHT && s==1) {
+            // La valeur de la lumière
+            float lv = sensorEvent.values[0];
+
+            light = " TimeAcc = " + sensorEvent.timestamp + "\n Light value = " + lv + "\n";
+            //On affiche la valeur
+            sensorTxt.setText(light);
+        }
+
+        //PROXIMITE
+        if (sensorEvent.sensor.getType() == Sensor.TYPE_PROXIMITY && s==2) {
+            // La valeur de la lumière
+            float p = sensorEvent.values[0];
+
+            proxi = " TimeAcc = " + sensorEvent.timestamp + "\n Proximite value = " + p + "\n";
+            //On affiche la valeur
+            sensorTxt.setText(proxi);
+        }
+
+        //GYROSCOPE
+        if (sensorEvent.sensor.getType() == Sensor.TYPE_GYROSCOPE && s==3) {
+            // La valeur de la lumière
+            float xGyroscope = sensorEvent.values[0];
+            float yGyroscope = sensorEvent.values[1];
+            float zGyroscope = sensorEvent.values[2];
+
+            gyro = " TimeAcc = " + sensorEvent.timestamp + "\n Valeur en x du gyroscope = " + xGyroscope + " " + "\n Valeur en y = " + yGyroscope + " " + "\n Valeur en z = " + zGyroscope + "\n";
+            //On affiche la valeur
+            sensorTxt.setText(gyro);
         }
 
     }

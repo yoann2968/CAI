@@ -27,6 +27,8 @@
     <string-array name="sensor">
         <item>Accelerometre</item>
         <item>Lumiere</item>
+        <item>Proximite</item>
+        <item>Gyroscope</item>
     </string-array>
 
 </resources>
