@@ -1,6 +1,7 @@
 package com.tp.myapplication;
 
 import android.content.Context;
+import android.content.pm.PackageManager;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -8,7 +9,10 @@ import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.telephony.SmsManager;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import java.util.List;
@@ -40,6 +44,16 @@ public class CapteurActivity extends AppCompatActivity implements SensorEventLis
             mAccelerometer = mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
             mLightSensor = mSensorManager.getDefaultSensor(Sensor.TYPE_LIGHT);
         }
+
+        //Initialisation du bouton permettant de voir les capteurs disponible
+        final Button envoie_sms = findViewById(R.id.envoie_sms);
+        envoie_sms.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //Appel de la méthode pour envoyer un sms
+                sendSMS();
+            }
+        });
 
     }
 
@@ -101,6 +115,27 @@ public class CapteurActivity extends AppCompatActivity implements SensorEventLis
     @Override
     public void onAccuracyChanged(Sensor sensor, int i) {
 
+    }
+
+    private void sendSMS() {
+        final int PERMISSION_REQUEST_CODE = 1;
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
+            if (checkSelfPermission(android.Manifest.permission.SEND_SMS) ==
+                    PackageManager.PERMISSION_DENIED) {
+                Log.d(" permission ", " permission denied to SEND_SMS - requesting it ");
+                String[] permissions = {android.Manifest.permission.SEND_SMS};
+                requestPermissions(permissions, PERMISSION_REQUEST_CODE);
+            }
+        }
+        String msg = " Hello ";
+
+        String num ="0658795964";
+        SmsManager.getDefault().sendTextMessage(num, null, msg, null, null);
+        /*Intent smsIntent = new Intent(Intent.ACTION_SENDTO);
+        smsIntent.addCategory(Intent.CATEGORY_DEFAULT);
+        smsIntent.setDataAndType(Uri.parse(" sms : ")," vnd . android - dir / mms - sms ");
+        smsIntent.putExtra(" sms_body ", msg);
+        startActivity(smsIntent);*/
     }
 
 }

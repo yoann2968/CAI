@@ -7,6 +7,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
 
@@ -22,6 +24,17 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        //Initialisation du bouton permettant de voir les capteurs disponible
+        final Button capteur_activity_button = findViewById(R.id.capteur_activity_button);
+        capteur_activity_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //Initialisation de l'intent pour la création de l'activité correspondant au capteur disponible
+                Intent intent = new Intent(MainActivity.this, CapteurActivity.class);
+                startActivity(intent);
+            }
+        });
 
     }
 
