@@ -22,6 +22,8 @@
 
     <string name="numero">Numero</string>
 
+    <string name="numero_example">0659785863</string>
+
     <string name="envoie_sms">Envoie des informations par sms</string>
 
     <string-array name="sensor">

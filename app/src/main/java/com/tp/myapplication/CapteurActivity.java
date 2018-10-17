@@ -44,7 +44,7 @@ public class CapteurActivity extends AppCompatActivity implements SensorEventLis
 
     private EditText numero;
 
-    private int s;
+    private String s;
 
     //Variable correspondant au valeur du capteur d'accélérometre
     private String acce;
@@ -75,7 +75,7 @@ public class CapteurActivity extends AppCompatActivity implements SensorEventLis
         spinner_sensor = findViewById(R.id.spinner_sensor);
 
         // Spinner Drop down elements
-        List<String> categories = new ArrayList<String>();
+        List<String> categories = new ArrayList<>();
 
         //Show only sensors that phone have and are implemented
         for (Sensor mySensor : sensors) {
@@ -88,9 +88,12 @@ public class CapteurActivity extends AppCompatActivity implements SensorEventLis
 
         // Creating adapter for spinner
         //ArrayAdapter<CharSequence> adapter_sensor = ArrayAdapter.createFromResource(this, R.array.sensor, android.R.layout.simple_spinner_item);
-        ArrayAdapter<String> adapter_sensor = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, categories);
+        ArrayAdapter<String> adapter_sensor = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, categories);
         adapter_sensor.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner_sensor.setAdapter(adapter_sensor);
+
+        //Pour initialisé directement la chaine avec la valeur par defaut pour éviter les probleme de fonction appeler avant
+        s=spinner_sensor.getSelectedItem().toString();
 
         // Spinner click listener
         spinner_sensor.setOnItemSelectedListener(this);
@@ -183,7 +186,7 @@ public class CapteurActivity extends AppCompatActivity implements SensorEventLis
 
         // Many sensors return 3 values , one for each axis .
         //ACCELEROMETRE
-        if (sensorEvent.sensor.getType() == Sensor.TYPE_ACCELEROMETER && s == 0) {
+        if (sensorEvent.sensor.getType() == Sensor.TYPE_ACCELEROMETER && s.equals("Accelerometre")) {
             float Ax = sensorEvent.values[0];
             float Ay = sensorEvent.values[1];
             float Az = sensorEvent.values[2];
@@ -192,11 +195,11 @@ public class CapteurActivity extends AppCompatActivity implements SensorEventLis
 
             // Do something with this sensor value .
             sensorTxt.setText(acce);
-            Log.v(TAG, " TimeAcc = " + sensorEvent.timestamp + " Ax = " + Ax + " " + " Ay = " + Ay + " " + " Az = " + Az);
+            Log.d(TAG, " TimeAcc = " + sensorEvent.timestamp + " Ax = " + Ax + " " + " Ay = " + Ay + " " + " Az = " + Az);
         }
 
         //LUMIERE
-        if (sensorEvent.sensor.getType() == Sensor.TYPE_LIGHT && s==1) {
+        if (sensorEvent.sensor.getType() == Sensor.TYPE_LIGHT && s.equals("Lumiere")) {
             // La valeur de la lumière
             float lv = sensorEvent.values[0];
 
@@ -206,8 +209,8 @@ public class CapteurActivity extends AppCompatActivity implements SensorEventLis
         }
 
         //PROXIMITE
-        if (sensorEvent.sensor.getType() == Sensor.TYPE_PROXIMITY && s==2) {
-            // La valeur de la lumière
+        if (sensorEvent.sensor.getType() == Sensor.TYPE_PROXIMITY && s.equals("Proximite")) {
+            // La valeur de proximité
             float p = sensorEvent.values[0];
 
             proxi = " TimeAcc = " + sensorEvent.timestamp + "\n Proximite value = " + p + "\n";
@@ -216,13 +219,13 @@ public class CapteurActivity extends AppCompatActivity implements SensorEventLis
         }
 
         //GYROSCOPE
-        if (sensorEvent.sensor.getType() == Sensor.TYPE_GYROSCOPE && s==3) {
-            // La valeur de la lumière
+        if (sensorEvent.sensor.getType() == Sensor.TYPE_GYROSCOPE && s.equals("Gyroscope")) {
+            // Les valeurs du gyroscope
             float xGyroscope = sensorEvent.values[0];
             float yGyroscope = sensorEvent.values[1];
             float zGyroscope = sensorEvent.values[2];
 
-            gyro = " TimeAcc = " + sensorEvent.timestamp + "\n Valeur en x du gyroscope = " + xGyroscope + " " + "\n Valeur en y = " + yGyroscope + " " + "\n Valeur en z = " + zGyroscope + "\n";
+            gyro = " TimeAcc = " + sensorEvent.timestamp + "\n Valeur du gyroscope \n Valeur en x = " + xGyroscope + " " + "\n Valeur en y = " + yGyroscope + " " + "\n Valeur en z = " + zGyroscope + "\n";
             //On affiche la valeur
             sensorTxt.setText(gyro);
         }
@@ -236,7 +239,7 @@ public class CapteurActivity extends AppCompatActivity implements SensorEventLis
 
     private void sendSMS() {
 
-        String msg = light + acce;
+        String msg = light + acce + proxi + gyro;
 
         String num = numero.getText().toString();
 
@@ -263,7 +266,7 @@ public class CapteurActivity extends AppCompatActivity implements SensorEventLis
     @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
 
-        s=i;
+        s=spinner_sensor.getSelectedItem().toString();
 
     }
 
