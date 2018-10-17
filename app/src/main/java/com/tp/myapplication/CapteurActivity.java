@@ -23,6 +23,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import android.widget.AdapterView.OnItemSelectedListener;
@@ -51,6 +52,10 @@ public class CapteurActivity extends AppCompatActivity implements SensorEventLis
     private String proxi;
     private String gyro;
 
+    //Liste des capteurs
+    List<Sensor> sensors;
+
+
     //Variable pour définir les spinners
     Spinner spinner_sensor;
 
@@ -62,18 +67,34 @@ public class CapteurActivity extends AppCompatActivity implements SensorEventLis
 
         numero = findViewById(R.id.numero);
 
+        //Detection des capteurs
+        sensors = sensorDetection();
+
         //Gestion des differents spinner servant à choisir le capteur
         //Spinner element
         spinner_sensor = findViewById(R.id.spinner_sensor);
-        ArrayAdapter<CharSequence> adapter_sensor = ArrayAdapter.createFromResource(this, R.array.sensor, android.R.layout.simple_spinner_item);
+
+        // Spinner Drop down elements
+        List<String> categories = new ArrayList<String>();
+
+        //Show only sensors that phone have and are implemented
+        for (Sensor mySensor : sensors) {
+            int t = mySensor.getType();
+            if (t == Sensor.TYPE_ACCELEROMETER) {categories.add("Accelerometre");}
+            else if (t == Sensor.TYPE_LIGHT) {categories.add("Lumiere");}
+            else if (t == Sensor.TYPE_PROXIMITY) {categories.add("Proximite");}
+            else if (t == Sensor.TYPE_GYROSCOPE) {categories.add("Gyroscope");}
+        }
+
+        // Creating adapter for spinner
+        //ArrayAdapter<CharSequence> adapter_sensor = ArrayAdapter.createFromResource(this, R.array.sensor, android.R.layout.simple_spinner_item);
+        ArrayAdapter<String> adapter_sensor = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, categories);
         adapter_sensor.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner_sensor.setAdapter(adapter_sensor);
 
         // Spinner click listener
         spinner_sensor.setOnItemSelectedListener(this);
 
-        //Detection des capteurs
-        sensorDetection();
 
         if (mSensorManager == null) {
             mSensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
@@ -120,7 +141,7 @@ public class CapteurActivity extends AppCompatActivity implements SensorEventLis
         }
     }
 
-    void sensorDetection() {
+    public List<Sensor> sensorDetection() {
         SensorManager mSensorManager;
         mSensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
         assert mSensorManager != null;
@@ -135,6 +156,7 @@ public class CapteurActivity extends AppCompatActivity implements SensorEventLis
                 Log.v(TAG, "info:Accelerometer_not_found");
             }
         }
+        return deviceSensors;
     }
 
     @Override
