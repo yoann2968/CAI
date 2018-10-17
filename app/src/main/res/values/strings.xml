@@ -16,7 +16,9 @@
 
     <!-- activity_help.xml  -->
 
-    <string name="help_title">Information concernant l\'application</string>
+    <string name="help_title">Informations concernant l\'application</string>
+
+    <string name="help_subtitle">Bienvenue dans le fichier d\'aide</string>
 
     <!-- activity_capteur.xmlchage.xml  -->
 

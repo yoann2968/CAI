@@ -58,7 +58,10 @@ public class HelpActivity extends AppCompatActivity {
     //Méthode permettant de faire l'activity_capteur de l'aide
     private void affichage() {
 
-        helpDisplay.setText("Voici un prémice du vrai fichier d'aide qui viendra plus tard");
+        helpDisplay.setText("\nCapteur à distance est une application permettant l'affichage les données relatives aux capteurs de son téléphone." +
+                "\nPour cela cliquez sur l'icône en forme de maison en haut à gauche, ceci vous permettra de revenir à l'écran d'accueil." +
+        "\nUne fois sur l'écran d'accueil deux choix s'offrent à vous pour obtenir les valeurs associées à vos capteurs: utiliser le bouton 'CAPTEUR DISPONIBLE' ou cliquer sur le menu en haut à gauche puis sur 'Affichage'." +
+        "\nSelectionnez ensuite le capteur et vos données s'affichent. Vous pouvez vous envoyer ces données par sms.");
 
     }
 
