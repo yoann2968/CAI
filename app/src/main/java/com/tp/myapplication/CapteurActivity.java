@@ -80,10 +80,15 @@ public class CapteurActivity extends AppCompatActivity implements SensorEventLis
         //Show only sensors that phone have and are implemented
         for (Sensor mySensor : sensors) {
             int t = mySensor.getType();
-            if (t == Sensor.TYPE_ACCELEROMETER) {categories.add("Accelerometre");}
-            else if (t == Sensor.TYPE_LIGHT) {categories.add("Lumiere");}
-            else if (t == Sensor.TYPE_PROXIMITY) {categories.add("Proximite");}
-            else if (t == Sensor.TYPE_GYROSCOPE) {categories.add("Gyroscope");}
+            if (t == Sensor.TYPE_ACCELEROMETER) {
+                categories.add("Accelerometre");
+            } else if (t == Sensor.TYPE_LIGHT) {
+                categories.add("Lumiere");
+            } else if (t == Sensor.TYPE_PROXIMITY) {
+                categories.add("Proximite");
+            } else if (t == Sensor.TYPE_GYROSCOPE) {
+                categories.add("Gyroscope");
+            }
         }
 
         // Creating adapter for spinner
@@ -93,7 +98,7 @@ public class CapteurActivity extends AppCompatActivity implements SensorEventLis
         spinner_sensor.setAdapter(adapter_sensor);
 
         //Pour initialisé directement la chaine avec la valeur par defaut pour éviter les probleme de fonction appeler avant
-        s=spinner_sensor.getSelectedItem().toString();
+        s = spinner_sensor.getSelectedItem().toString();
 
         // Spinner click listener
         spinner_sensor.setOnItemSelectedListener(this);
@@ -266,7 +271,7 @@ public class CapteurActivity extends AppCompatActivity implements SensorEventLis
     @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
 
-        s=spinner_sensor.getSelectedItem().toString();
+        s = spinner_sensor.getSelectedItem().toString();
 
     }
 

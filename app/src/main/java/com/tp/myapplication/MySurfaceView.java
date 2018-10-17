@@ -28,13 +28,12 @@ public class MySurfaceView extends SurfaceView implements SurfaceHolder.Callback
 
         setFocusable(true);
 
-        if(surfaceHolder == null) {
+        if (surfaceHolder == null) {
             // Get surfaceHolder object.
             surfaceHolder = getHolder();
             // Add this as surfaceHolder callback object.
             surfaceHolder.addCallback(this);
         }
-
 
 
         // Set the parent view background color. This can not set surfaceview background color.
@@ -48,8 +47,7 @@ public class MySurfaceView extends SurfaceView implements SurfaceHolder.Callback
 
 
     /* This method will be invoked to draw a circle in canvas. */
-    public void drawRedBall(float circleX, float circleY)
-    {
+    public void drawRedBall(float circleX, float circleY) {
         // Get and lock canvas object from surfaceHolder.
         Canvas canvas = surfaceHolder.lockCanvas();
 

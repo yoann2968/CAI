@@ -56,7 +56,7 @@ public class HelpActivity extends AppCompatActivity {
     }
 
     //Méthode permettant de faire l'activity_capteur de l'aide
-    private void affichage(){
+    private void affichage() {
 
         helpDisplay.setText("Voici un prémice du vrai fichier d'aide qui viendra plus tard");
 
