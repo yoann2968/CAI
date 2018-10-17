@@ -244,7 +244,23 @@ public class CapteurActivity extends AppCompatActivity implements SensorEventLis
 
     private void sendSMS() {
 
-        String msg = light + acce + proxi + gyro;
+        //initialisation avec rien au cas ou on n'a aucun des capteurs
+        String msg = "";
+
+        switch (s) {
+            case "Accelerometre":
+                msg = acce;
+                break;
+            case "Lumiere":
+                msg = light;
+                break;
+            case "Proximite":
+                msg = proxi;
+                break;
+            case "Gyroscope":
+                msg = gyro;
+                break;
+        }
 
         String num = numero.getText().toString();
 
