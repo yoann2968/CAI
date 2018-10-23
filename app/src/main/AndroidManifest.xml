@@ -2,9 +2,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.tp.myapplication">
 
-    <uses-permission android:name="android.permission.VIBRATE"></uses-permission>
-
-    <uses-permission android:name="android.permission.SEND_SMS"></uses-permission>
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.SEND_SMS" />
+    <uses-permission android:name="android.permission.BLUETOOTH" />
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
 
     <uses-feature
         android:name="android.hardware.sensor.accelerometer"
@@ -15,7 +16,6 @@
     <uses-feature
         android:name="android.hardware.sensor.compass"
         android:required="true" />
-
     <uses-feature
         android:name="android.hardware.sensor.gyroscope"
         android:required="true" />
@@ -35,7 +35,8 @@
         android:theme="@style/AppTheme">
         <activity android:name=".MainActivity">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+                <action android:name="android.intent.action.MAIN"
+                    android:screenOrientation="portrait" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>

@@ -1,5 +1,7 @@
 package com.tp.myapplication;
 
+import android.bluetooth.BluetoothAdapter;
+import android.bluetooth.BluetoothDevice;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -22,42 +24,42 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
+
 
 import android.widget.AdapterView.OnItemSelectedListener;
 
 
 public class CapteurActivity extends AppCompatActivity implements SensorEventListener, OnItemSelectedListener {
 
-    final String TAG = "sensor";
+    //Variable pour activé le bluetooth
+    private static final int ENABLE_BLUETOOTH = 1;
+    private static final int DISCOVERY_REQUEST = 3;
 
+
+    final String TAG = "sensor";
     SensorManager mSensorManager;
+    //Liste des capteurs
+    List<Sensor> sensors;
+    //Variable pour définir les spinners
+    Spinner spinner_sensor;
     private Sensor mAccelerometer; //Accelerometre
     private Sensor mLightSensor; //Capteur de lumiere
     private Sensor mProximiteSensor; //Capteur de lumiere
     private Sensor mGyroscopeSensor; //Capteur de lumiere
-
-
     private TextView sensorTxt;
-
     private EditText numero;
-
     private String s;
-
     //Variable correspondant au valeur du capteur d'accélérometre
     private String acce;
     private String light;
     private String proxi;
     private String gyro;
 
-    //Liste des capteurs
-    List<Sensor> sensors;
+    private BluetoothAdapter mBluetoothAdapter;
 
-
-    //Variable pour définir les spinners
-    Spinner spinner_sensor;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -114,6 +116,21 @@ public class CapteurActivity extends AppCompatActivity implements SensorEventLis
             mGyroscopeSensor = mSensorManager.getDefaultSensor(Sensor.TYPE_GYROSCOPE);
         }
 
+        mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+        if (mBluetoothAdapter == null) {
+            Toast.makeText(this, " Device does not support Bluetooth ", Toast.LENGTH_LONG).show();
+        } else {
+            initBluetooth();
+            makeDiscoverable();
+            //mBluetoothAdapter.startDiscovery();
+
+            Set<BluetoothDevice> deviceListName = mBluetoothAdapter.getBondedDevices();
+            for (BluetoothDevice blueDevice : deviceListName) {
+                Toast.makeText(CapteurActivity.this, "Device = " + blueDevice.getName(), Toast.LENGTH_SHORT).show();
+            }
+        }
+
+
         //Initialisation du bouton permettant de voir les capteurs disponible
         final Button envoie_sms = findViewById(R.id.envoie_sms);
         envoie_sms.setOnClickListener(new View.OnClickListener() {
@@ -156,12 +173,12 @@ public class CapteurActivity extends AppCompatActivity implements SensorEventLis
         List<Sensor> deviceSensors = mSensorManager.getSensorList(Sensor.TYPE_ALL);
         if (deviceSensors != null && !deviceSensors.isEmpty()) {
             for (Sensor mySensor : deviceSensors) {
-                Log.v(TAG, "info : " + mySensor.toString());
+                Log.d(TAG, "info : " + mySensor.toString());
             }
             if (mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER) != null) {
-                Log.v(TAG, "info:Accelerometer_found_!");
+                Log.d(TAG, "info:Accelerometer_found_!");
             } else {
-                Log.v(TAG, "info:Accelerometer_not_found");
+                Log.d(TAG, "info:Accelerometer_not_found");
             }
         }
         return deviceSensors;
@@ -294,6 +311,38 @@ public class CapteurActivity extends AppCompatActivity implements SensorEventLis
     @Override
     public void onNothingSelected(AdapterView<?> adapterView) {
         // TODO Auto-generated method stub
+    }
+
+    private void initBluetooth() {
+        if (!mBluetoothAdapter.isEnabled()) {
+            Intent intent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+            startActivityForResult(intent, ENABLE_BLUETOOTH);
+        }
+    }
+
+    private void makeDiscoverable() {
+        Intent discoverableIntent = new Intent(BluetoothAdapter.
+                ACTION_REQUEST_DISCOVERABLE);
+        // discoverable for 5 minutes (~300 seconds )
+        discoverableIntent.putExtra(BluetoothAdapter.EXTRA_DISCOVERABLE_DURATION
+                , 300);
+        startActivityForResult(discoverableIntent, DISCOVERY_REQUEST);
+        Log.i(" Log ", " Discoverable ");
+    }
+
+
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == ENABLE_BLUETOOTH)
+            if (resultCode == RESULT_OK) {
+                Log.v(TAG, " BT = " + ENABLE_BLUETOOTH);
+            }
+        if (requestCode == DISCOVERY_REQUEST) {
+            if (resultCode == RESULT_CANCELED) {
+                Log.d(TAG, " Discovery cancelled by user ");
+            } else {
+                Log.v(TAG, " Discovery allowed ");
+            }
+        }
     }
 
 }
